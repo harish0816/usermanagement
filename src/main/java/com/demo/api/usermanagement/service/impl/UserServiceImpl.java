@@ -1,13 +1,18 @@
 package com.demo.api.usermanagement.service.impl;
 
+import static com.demo.api.usermanagement.constants.MessageConstants.USER_ALREAD_EXIST;
+import static com.demo.api.usermanagement.constants.MessageConstants.USER_DOES_NOT_EXIST;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.demo.api.usermanagement.model.User;
-import com.demo.api.usermanagement.model.UserDTO;
+import com.demo.api.usermanagement.exceptions.UserAlreadyExistException;
+import com.demo.api.usermanagement.exceptions.UserDoesNotExistException;
+import com.demo.api.usermanagement.model.UserDetails;
+import com.demo.api.usermanagement.model.UserDetailsDTO;
 import com.demo.api.usermanagement.repository.UserRepository;
 import com.demo.api.usermanagement.service.UserService;
 
@@ -24,26 +29,32 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
-	public User createUser(User user) {
-
+	public UserDetails createUser(UserDetails user) {
+		UserDetails existingUser = getUserById(user.getEmail());
+		if (existingUser != null) {
+			throw new UserAlreadyExistException(String.format(USER_ALREAD_EXIST, user.getEmail()));
+		}
 		return userRepository.save(user);
 	}
 
 	@Override
-	public List<UserDTO> getAllUsers() {
+	public List<UserDetailsDTO> getAllUsers() {
 
-		List<User> list = userRepository.findAll();
+		List<UserDetails> list = userRepository.findAll();
 		return list.stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	@Override
-	public User updateUser(User user) {
+	public UserDetails updateUser(UserDetails user) {
 
-		User existingUser = userRepository.findById(user.getEmail()).get();
+		UserDetails existingUser = userRepository.findById(user.getEmail()).get();
+		if (existingUser == null) {
+			throw new UserDoesNotExistException(String.format(USER_DOES_NOT_EXIST, user.getEmail()));
+		}
 		existingUser.setName(user.getName());
 		existingUser.setPassword(user.getPassword());
 
-		User updatedUser = userRepository.save(existingUser);
+		UserDetails updatedUser = userRepository.save(existingUser);
 
 		return updatedUser;
 	}
@@ -55,14 +66,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(String email) {
+	public UserDetails getUserById(String email) {
 
-		Optional<User> optionalUser = userRepository.findById(email);
+		Optional<UserDetails> optionalUser = userRepository.findById(email);
 		return optionalUser.isPresent() ? optionalUser.get() : null;
 	}
 
-	private UserDTO convertToDTO(User user) {
-		UserDTO userDTO = new UserDTO();
+	private UserDetailsDTO convertToDTO(UserDetails user) {
+		UserDetailsDTO userDTO = new UserDetailsDTO();
 		userDTO.setName(user.getName());
 		userDTO.setEmail(user.getEmail());
 		userDTO.setLastLoginTime(user.getLastLoginTime());

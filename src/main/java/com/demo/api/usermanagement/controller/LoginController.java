@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.api.usermanagement.model.LoginRequest;
-import com.demo.api.usermanagement.model.User;
+import com.demo.api.usermanagement.model.LoginDetails;
+import com.demo.api.usermanagement.model.UserDetails;
 import com.demo.api.usermanagement.service.UserService;
 
 import jakarta.validation.Valid;
@@ -52,11 +52,11 @@ public class LoginController {
 	 * @return 201 if successful or 500 if failed
 	 */
 	@PostMapping
-	public ResponseEntity<String> validateUser(@Valid @RequestBody LoginRequest request,
+	public ResponseEntity<String> validateUser(@Valid @RequestBody LoginDetails request,
 			@RequestHeader Map<String, String> headers) {
 
 		try {
-			User savedUser = userService.getUserById(request.getUserId());
+			UserDetails savedUser = userService.getUserById(request.getUserId());
 			if (!passwordEncoder().matches(request.getPassword(), savedUser.getPassword())) {
 				return new ResponseEntity<>("Bad credentials", HttpStatus.UNAUTHORIZED);
 			}
