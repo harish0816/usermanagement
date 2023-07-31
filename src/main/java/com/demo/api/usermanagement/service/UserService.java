@@ -2,21 +2,21 @@ package com.demo.api.usermanagement.service;
 
 import java.util.List;
 
-import com.demo.api.usermanagement.model.User;
-import com.demo.api.usermanagement.model.UserDTO;
+import com.demo.api.usermanagement.model.UserDetails;
+import com.demo.api.usermanagement.model.UserDetailsDTO;
 
 /**
  * Service for CURD operations on User entity
  */
 public interface UserService {
 
-	User createUser(User user);
+	UserDetails createUser(UserDetails user);
 
-	List<UserDTO> getAllUsers();
+	List<UserDetailsDTO> getAllUsers();
 
-	User updateUser(User user);
+	UserDetails updateUser(UserDetails user, boolean isLogin);
 
-	User getUserById(String email);
+	UserDetails getUserById(String email);
 
 	void deleteUser(String email);
 }

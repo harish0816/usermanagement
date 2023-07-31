@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * Instance that maps internal data to external data
  */
-public class UserDTO {
+public class UserDetailsDTO {
 
 	private String email;
 	private String name;

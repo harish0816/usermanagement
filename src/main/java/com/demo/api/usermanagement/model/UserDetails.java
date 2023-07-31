@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class UserDetails {
 
 	@Id
 	@NotBlank
@@ -37,5 +37,4 @@ public class User {
 
 	@Column
 	private LocalDateTime lastLoginTime;
-
 }

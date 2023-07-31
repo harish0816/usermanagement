@@ -3,12 +3,12 @@ package com.demo.api.usermanagement.model;
 /**
  * Instance to hold login info
  */
-public class LoginRequest {
+public class LoginDetails {
 
 	private String userId;
 	private String password;
 
-	public LoginRequest(String userId, String password) {
+	public LoginDetails(String userId, String password) {
 		this.userId = userId;
 		this.password = password;
 	}
