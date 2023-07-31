@@ -57,6 +57,7 @@ public class LoginController {
 		UserDetails savedUser = userService.getUserById(request.getUserId());
 		if (savedUser == null) {
 			throw new UserDoesNotExistException(String.format(USER_DOES_NOT_EXIST, request.getUserId()));
+
 		}
 		if (!passwordEncoder().matches(request.getPassword(), savedUser.getPassword())) {
 			throw new BadCredentialsException(String.format(BAD_CREDENTIALS, request.getUserId()));

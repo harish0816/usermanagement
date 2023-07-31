@@ -3,7 +3,6 @@ package com.demo.api.usermanagement.controller;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
@@ -19,9 +18,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.demo.api.usermanagement.model.UserDetailsDTO;
 import com.demo.api.usermanagement.service.UserService;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(value = UserController.class, excludeAutoConfiguration = { SecurityAutoConfiguration.class })
 public class UserControllerTest {
@@ -76,13 +72,6 @@ public class UserControllerTest {
 	@Disabled("To be done")
 	public void testInvalidLogin() {
 
-	}
-
-	protected <T> T mapFromJson(String json, Class<T> clazz)
-			throws JsonParseException, JsonMappingException, IOException {
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.readValue(json, clazz);
 	}
 
 }

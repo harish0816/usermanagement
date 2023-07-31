@@ -59,7 +59,6 @@ public class UserController {
 		String pswd = passwordEncoder().encode(user.getPassword());
 		user.setPassword(pswd);
 		UserDetails savedUser = userService.createUser(user);
-
 		if (savedUser != null) {
 			return new ResponseEntity<>(USER_CREATED + savedUser.getEmail(), HttpStatus.CREATED);
 		} else {
@@ -94,7 +93,6 @@ public class UserController {
 		String pswd = passwordEncoder().encode(user.getPassword());
 		user.setPassword(pswd);
 		UserDetails updatedUser = userService.updateUser(user, false);
-
 		return new ResponseEntity<>(USER_UPDATED + updatedUser.getEmail(), HttpStatus.OK);
 	}
 
