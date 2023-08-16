@@ -1,4 +1,4 @@
-# User mangement API
+# User management API
 
 ## Use cases
 
