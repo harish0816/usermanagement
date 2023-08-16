@@ -28,3 +28,5 @@ Build: Apache Maven
 - Add security features
 - Add documentation
 - Cache user login data, for instance using Redis
+- Session management
+- Securely store DB credentials
